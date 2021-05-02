@@ -43,7 +43,7 @@ public class GreetzTest {
         Thread.sleep(2000);
     }
 
-    //  Thread.sleep(2000);
+
     @BeforeMethod
     public void openingThaPageWewant() throws InterruptedException {
         Actions actions = new Actions(driver);
@@ -110,7 +110,7 @@ public class GreetzTest {
         WebElement randomBouquetTest2 = allBouquetstest2.get(new Random().nextInt(allBouquetstest2.size()));
         randomBouquetTest2.click();
         Thread.sleep(2000);
-        String randomsNameTest2= driver.findElement(By.xpath("//div[@class='page-detail__sidebar']//h1")).getText();
+        String randomsNameTest2 = driver.findElement(By.xpath("//div[@class='page-detail__sidebar']//h1")).getText();
         try {
             String randomsPriceTest2 = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='current-price']")).getText();
 
@@ -118,7 +118,7 @@ public class GreetzTest {
             System.out.println("No element was found by xpath(//span[@data-qa-ref=current-price']");
         }
         String randomsPriceTest2 = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='normal-price']")).getText();
-        WebElement favouriteButton= driver.findElement(By.xpath("//div[@class='page-detail__favorite']//div"));
+        WebElement favouriteButton = driver.findElement(By.xpath("//div[@class='page-detail__favorite']//div"));
         favouriteButton.click();
         Thread.sleep(2000);
         WebElement myAccountIconTest2 = driver.findElement(By.xpath("//div[@class='page-header__navigation']//i[@data-qa-ref='profile-icon']"));
@@ -142,7 +142,7 @@ public class GreetzTest {
         Double doublePriceFavTest2 = Double.parseDouble(selectedPriceTest2Cust);
         Double doublePricerandomTest2 = Double.parseDouble(randomsPriceTest2.substring(1).replace(",", "."));
         Assert.assertEquals(randomsNameTest2, selectedNameTest2, "Randomly selected product's name" + " " + randomsNameTest2 + "" + "doesn't match with the name " + " " + selectedNameTest2 + ",found from its details page");
-        Assert.assertEquals(doublePricerandomTest2, doublePriceFavTest2, "Randomly selected product's price" + " " + randomsPriceTest2 + "" + "doesn't match with the price " + " " + selectedPricetest2+ ",found from its details page");
+        Assert.assertEquals(doublePricerandomTest2, doublePriceFavTest2, "Randomly selected product's price" + " " + randomsPriceTest2 + "" + "doesn't match with the price " + " " + selectedPricetest2 + ",found from its details page");
         WebElement unFavouriteTest2 = driver.findElement(By.xpath("//div[@class='page-detail__favorite']//div"));
         unFavouriteTest2.click();
 
@@ -153,7 +153,7 @@ public class GreetzTest {
     public void Logout() throws InterruptedException {
         WebElement myAccountIcon = driver.findElement(By.xpath("//div[@class='page-header__navigation']//i[@data-qa-ref='profile-icon']"));
         myAccountIcon.click();
-        WebElement logoutIcon=driver.findElement(By.xpath("//div[@data-qa-ref='humburger-menu']//span[text()='Uitloggen']"));
+        WebElement logoutIcon = driver.findElement(By.xpath("//div[@data-qa-ref='humburger-menu']//span[text()='Uitloggen']"));
         logoutIcon.click();
         Thread.sleep(1000);
         driver.quit();
