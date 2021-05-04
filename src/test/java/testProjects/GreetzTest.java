@@ -100,8 +100,7 @@ public class GreetzTest {
         Double doublePricerandom = Double.parseDouble(randomBouquetPrice.replace(",", "."));
         Assert.assertEquals(randomBouquetName, selectedFavouritesName, "Randomly selected product's name" + " " + randomBouquetName + "" + "doesn't match with the name " + " " + selectedFavouritesName + ",found from its details page");
         Assert.assertEquals(doublePricerandom, doublePriceFav, "Randomly selected product's price" + " " + randomBouquetPrice + "" + "doesn't match with the price " + " " + selectedFavouritesPrice + ",found from its details page");
-        WebElement unFavourite = driver.findElement(By.xpath("//div[@class='page-detail__favorite']//div"));
-        unFavourite.click();
+
     }
 
     @Test
@@ -131,23 +130,28 @@ public class GreetzTest {
         lastFavourite.click();
         Thread.sleep(2000);
         String selectedNameTest2 = driver.findElement(By.xpath("//div[@class='page-detail__sidebar']//h1")).getText();
+        WebElement selectedPricetest2 ;
         try {
             String selectedPriceTest2 = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='current-price']")).getText();
 
         } catch (NoSuchElementException e) {
-            System.out.println("No element was found by xpath(//span[@data-qa-ref=current-price']");
+          //  selectedPricetest2 = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='normal-price']")).getText();
+
         }
-        String selectedPricetest2 = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='normal-price']")).getText();
-        String selectedPriceTest2Cust = selectedPricetest2.substring(1).replace(",", ".");
-        Double doublePriceFavTest2 = Double.parseDouble(selectedPriceTest2Cust);
+       // String selectedPriceTest2Cust = selectedPricetest2.getText().substring(1).replace(",", ".");
+      //  Double doublePriceFavTest2 = Double.parseDouble(selectedPriceTest2Cust);
         Double doublePricerandomTest2 = Double.parseDouble(randomsPriceTest2.substring(1).replace(",", "."));
         Assert.assertEquals(randomsNameTest2, selectedNameTest2, "Randomly selected product's name" + " " + randomsNameTest2 + "" + "doesn't match with the name " + " " + selectedNameTest2 + ",found from its details page");
-        Assert.assertEquals(doublePricerandomTest2, doublePriceFavTest2, "Randomly selected product's price" + " " + randomsPriceTest2 + "" + "doesn't match with the price " + " " + selectedPricetest2 + ",found from its details page");
-        WebElement unFavouriteTest2 = driver.findElement(By.xpath("//div[@class='page-detail__favorite']//div"));
-        unFavouriteTest2.click();
-
-
+      //  Assert.assertEquals(doublePricerandomTest2, doublePriceFavTest2, "Randomly selected product's price" + " " + randomsPriceTest2 + "" + "doesn't match with the price " + " " + selectedPricetest2 + ",found from its details page");
     }
+
+        @AfterMethod
+        public void UndoFavourite () {
+            WebElement unFavouriteTest2 = driver.findElement(By.xpath("//div[@class='page-detail__favorite']//div"));
+            unFavouriteTest2.click();
+        }
+
+
 
     @AfterClass
     public void Logout() throws InterruptedException {
