@@ -40,8 +40,9 @@ public class SeleniumDevTest {
             String searchResultTitle = elem.getText();
             softAssert.assertTrue(searchResultTitle.toLowerCase().contains(expectedWord.toLowerCase()), "This title doesn't contain the word " + expectedWord);
         }
-        softAssert.assertAll();
         driver.quit();
+        softAssert.assertAll();
+
 
     }
 }
