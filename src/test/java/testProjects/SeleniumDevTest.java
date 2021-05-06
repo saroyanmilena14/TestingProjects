@@ -31,9 +31,9 @@ public class SeleniumDevTest {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(versionExpected, versionActual);
         WebElement searchButton = driver.findElement(By.cssSelector("input[name=search]"));
-        searchButton.sendKeys("selenium" + Keys.ENTER);
-        Thread.sleep(2000);
         String expectedWord = "selenium";
+        searchButton.sendKeys(expectedWord + Keys.ENTER);
+        Thread.sleep(2000);
         List<WebElement> searchResults = driver.findElements(By.xpath("//div[@class='gsc-resultsbox-visible']//div[@class='gs-title']"));
 
         for (WebElement elem : searchResults) {

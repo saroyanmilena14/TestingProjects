@@ -69,13 +69,14 @@ public class GreetzTest {
         favouriteButton.click();
         String randomBouquetName = randomBouquet.findElement(By.xpath(".//div[@class='b-products-grid__item-title']")).getText();
         Thread.sleep(3000);
+        WebElement randomBouquetPrice;
         try {
-            String randomBouquetPrice = randomBouquet.findElement(By.xpath(".//span[@data-qa-ref='current-price']")).getText();
+            randomBouquetPrice = randomBouquet.findElement(By.xpath(".//span[@data-qa-ref='current-price']"));
 
         } catch (NoSuchElementException e) {
-            System.out.println("No element was found by xpath(.//span[@data-qa-ref=current-price']");
+            randomBouquetPrice = randomBouquet.findElement(By.xpath(".//span[@data-qa-ref='normal-price']"));
         }
-        String randomBouquetPrice = randomBouquet.findElement(By.xpath(".//span[@data-qa-ref='normal-price']")).getText();
+        String productPriceText = randomBouquetPrice.getText();
 
         WebElement myAccountIcon = driver.findElement(By.xpath("//div[@class='page-header__navigation']//i[@data-qa-ref='profile-icon']"));
         myAccountIcon.click();
@@ -88,18 +89,19 @@ public class GreetzTest {
         Thread.sleep(5000);
         String selectedFavouritesName = driver.findElement(By.xpath("//div[@class='page-detail__sidebar']//h1")).getText();
         Thread.sleep(2000);
+        WebElement selectedFavPrice;
         try {
-            String selectedFavouritesPrice = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='current-price']")).getText();
+            selectedFavPrice = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='current-price']"));
 
         } catch (NoSuchElementException e) {
-            System.out.println("No element was found by xpath(//span[@data-qa-ref=current-price']");
+            selectedFavPrice = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='normal-price']"));
         }
-        String selectedFavouritesPrice = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='normal-price']")).getText();
-        String selectedFavPriceForCust = selectedFavouritesPrice.substring(1).replace(",", ".");
-        Double doublePriceFav = Double.parseDouble(selectedFavPriceForCust);
-        Double doublePricerandom = Double.parseDouble(randomBouquetPrice.replace(",", "."));
+        String selectedFavouritesPriceText = selectedFavPrice.getText().substring(1).replace(",", ".");
+
+        Double doublePriceFav = Double.parseDouble(selectedFavouritesPriceText);
+        Double doublePricerandom = Double.parseDouble(productPriceText.replace(",", "."));
         Assert.assertEquals(randomBouquetName, selectedFavouritesName, "Randomly selected product's name" + " " + randomBouquetName + "" + "doesn't match with the name " + " " + selectedFavouritesName + ",found from its details page");
-        Assert.assertEquals(doublePricerandom, doublePriceFav, "Randomly selected product's price" + " " + randomBouquetPrice + "" + "doesn't match with the price " + " " + selectedFavouritesPrice + ",found from its details page");
+        Assert.assertEquals(doublePricerandom, doublePriceFav, "Randomly selected product's price" + " " + randomBouquetPrice + "" + "doesn't match with the price " + " " + selectedFavPrice + ",found from its details page");
 
     }
 
@@ -110,13 +112,14 @@ public class GreetzTest {
         randomBouquetTest2.click();
         Thread.sleep(2000);
         String randomsNameTest2 = driver.findElement(By.xpath("//div[@class='page-detail__sidebar']//h1")).getText();
+        WebElement randomsPriceTest2;
         try {
-            String randomsPriceTest2 = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='current-price']")).getText();
+            randomsPriceTest2 = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='current-price']"));
 
         } catch (NoSuchElementException e) {
-            System.out.println("No element was found by xpath(//span[@data-qa-ref=current-price']");
+            randomsPriceTest2 = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='normal-price']"));
         }
-        String randomsPriceTest2 = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='normal-price']")).getText();
+        String randomsPriceTest2Text = randomsPriceTest2.getText();
         WebElement favouriteButton = driver.findElement(By.xpath("//div[@class='page-detail__favorite']//div"));
         favouriteButton.click();
         Thread.sleep(2000);
@@ -130,27 +133,27 @@ public class GreetzTest {
         lastFavourite.click();
         Thread.sleep(2000);
         String selectedNameTest2 = driver.findElement(By.xpath("//div[@class='page-detail__sidebar']//h1")).getText();
-        WebElement selectedPricetest2 ;
+
+        WebElement selectedPriceTest2;
         try {
-            String selectedPriceTest2 = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='current-price']")).getText();
+            selectedPriceTest2 = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='current-price']"));
 
         } catch (NoSuchElementException e) {
-          //  selectedPricetest2 = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='normal-price']")).getText();
+            selectedPriceTest2 = driver.findElement(By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='normal-price']"));
 
         }
-       // String selectedPriceTest2Cust = selectedPricetest2.getText().substring(1).replace(",", ".");
-      //  Double doublePriceFavTest2 = Double.parseDouble(selectedPriceTest2Cust);
-        Double doublePricerandomTest2 = Double.parseDouble(randomsPriceTest2.substring(1).replace(",", "."));
+        String selectedPriceTest2Cust = selectedPriceTest2.getText().substring(1).replace(",", ".");
+        Double doublePriceFavTest2 = Double.parseDouble(selectedPriceTest2Cust);
+        Double doublePricerandomTest2 = Double.parseDouble(randomsPriceTest2Text.substring(1).replace(",", "."));
         Assert.assertEquals(randomsNameTest2, selectedNameTest2, "Randomly selected product's name" + " " + randomsNameTest2 + "" + "doesn't match with the name " + " " + selectedNameTest2 + ",found from its details page");
-      //  Assert.assertEquals(doublePricerandomTest2, doublePriceFavTest2, "Randomly selected product's price" + " " + randomsPriceTest2 + "" + "doesn't match with the price " + " " + selectedPricetest2 + ",found from its details page");
+        Assert.assertEquals(doublePricerandomTest2, doublePriceFavTest2, "Randomly selected product's price" + " " + randomsPriceTest2 + "" + "doesn't match with the price " + " " + selectedPriceTest2 + ",found from its details page");
     }
 
-        @AfterMethod
-        public void UndoFavourite () {
-            WebElement unFavouriteTest2 = driver.findElement(By.xpath("//div[@class='page-detail__favorite']//div"));
-            unFavouriteTest2.click();
-        }
-
+    @AfterMethod
+    public void UndoFavourite() {
+        WebElement unFavouriteTest2 = driver.findElement(By.xpath("//div[@class='page-detail__favorite']//div"));
+        unFavouriteTest2.click();
+    }
 
 
     @AfterClass
