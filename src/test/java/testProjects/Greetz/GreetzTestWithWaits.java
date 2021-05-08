@@ -1,4 +1,4 @@
-package testProjects;
+package testProjects.Greetz;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -21,8 +21,8 @@ public class GreetzTestWithWaits {
     By listOfFavsElemLoc = By.xpath("//div[@data-qa-ref='humburger-menu']//span[text()='Favorieten']");
     By FavouritesListPageLoc = By.xpath("//div[@class='clearfix']//div[@class='favorite-item']");
     By selectedFavNameElemLoc = By.xpath("//div[@class='page-detail__sidebar']//h1");
-    By productsCurrentPriceFromDetailsPage = By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='current-price']");
-    By productsNormalPriceFromDetailsPage = By.xpath("//div[@class='page-detail__price']//span[@data-qa-ref='normal-price']");
+    By productsCurrentPriceFromDetailsPage = By.cssSelector("[data-qa-ref=current-price]");
+    By productsNormalPriceFromDetailsPage = By.cssSelector("[data-qa-ref=normal-price]");
     By favouriteButtonFromDetailsPage = By.xpath("//div[@class='page-detail__favorite']//div");
 
 
@@ -77,24 +77,26 @@ public class GreetzTestWithWaits {
 
 
     @Test
-    public void CheckingFavouritesPriceAndName() throws InterruptedException {
+    public void CheckingFavouritesPriceAndName() {
         WebDriverWait wait = new WebDriverWait(driver, 25);
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(allProductsElemsLoc, 40));
-        List<WebElement> allBouquets = driver.findElements(allProductsElemsLoc);
+        List<WebElement> allBouquets = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(allProductsElemsLoc));
         WebElement randomBouquet = allBouquets.get(new Random().nextInt(allBouquets.size()));
         WebElement favouriteButtonElem = wait.until(ExpectedConditions.elementToBeClickable(randomBouquet.findElement(favouriteButtonElemLoc)));
         favouriteButtonElem.click();
-        String randomBouquetName = randomBouquet.findElement(By.xpath(".//div[@class='b-products-grid__item-title']")).getText();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@class='b-products-grid__item-title']")));
+        WebElement randomBouquetNameElem = randomBouquet.findElement(By.xpath(".//div[@class='b-products-grid__item-title']"));
+        String randomBouquetName = randomBouquetNameElem.getText();
         By randomBouquetCurrentPriceElemLoc = By.xpath(".//span[@data-qa-ref='current-price']");
         By randomBouquetNormalPriceElemLoc = By.xpath(".//span[@data-qa-ref='normal-price']");
         WebElement randomBouquetPriceElem;
         try {
+
             randomBouquetPriceElem = randomBouquet.findElement(randomBouquetCurrentPriceElemLoc);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(randomBouquetCurrentPriceElemLoc));
 
         } catch (NoSuchElementException e) {
+
             randomBouquetPriceElem = randomBouquet.findElement(randomBouquetNormalPriceElemLoc);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(randomBouquetNormalPriceElemLoc));
         }
         String productPriceText = randomBouquetPriceElem.getText();
 
@@ -102,19 +104,20 @@ public class GreetzTestWithWaits {
         myAccountIconElem.click();
         WebElement listOfFavsElem = wait.until(ExpectedConditions.elementToBeClickable(listOfFavsElemLoc));
         listOfFavsElem.click();
-        wait.until(ExpectedConditions.numberOfElementsToBe(FavouritesListPageLoc, 1));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(FavouritesListPageLoc, 0));
         List<WebElement> favourites = driver.findElements(FavouritesListPageLoc);
         WebElement lastFavourite = favourites.get(0);
         lastFavourite.click();
+
         WebElement selectedFavNameElem = wait.until(ExpectedConditions.visibilityOfElementLocated(selectedFavNameElemLoc));
         String selectedFavNameElemText = selectedFavNameElem.getText();
 
         WebElement selectedFavPriceElem;
         try {
-            selectedFavPriceElem = wait.until(ExpectedConditions.visibilityOfElementLocated(productsCurrentPriceFromDetailsPage));
+            selectedFavPriceElem = driver.findElement(productsCurrentPriceFromDetailsPage);
 
-        } catch (ElementNotVisibleException e) {
-            selectedFavPriceElem = wait.until(ExpectedConditions.visibilityOfElementLocated(productsNormalPriceFromDetailsPage));
+        } catch (NoSuchElementException e) {
+            selectedFavPriceElem = driver.findElement(productsNormalPriceFromDetailsPage);
         }
         String selectedFavouritesPriceText = selectedFavPriceElem.getText().substring(1).replace(",", ".");
 
@@ -126,10 +129,10 @@ public class GreetzTestWithWaits {
     }
 
     @Test
-    public void CheckingNameAndPriceNewFlows() throws InterruptedException {
+    public void CheckingNameAndPriceNewFlows() {
         WebDriverWait wait = new WebDriverWait(driver, 25);
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(allProductsElemsLoc, 40));
-        List<WebElement> allBouquets = driver.findElements(allProductsElemsLoc);
+        List<WebElement> allBouquets = wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(allProductsElemsLoc, 20));
+
         WebElement randomBouquet = allBouquets.get(new Random().nextInt(allBouquets.size()));
         randomBouquet.click();
 
@@ -137,21 +140,21 @@ public class GreetzTestWithWaits {
         String randomNameElemText = randomNameElem.getText();
         WebElement randomPriceElem;
         try {
-            randomPriceElem = wait.until(ExpectedConditions.visibilityOfElementLocated(productsCurrentPriceFromDetailsPage));
+            randomPriceElem = driver.findElement(productsCurrentPriceFromDetailsPage);
 
-        } catch (ElementNotVisibleException e) {
-            randomPriceElem = wait.until(ExpectedConditions.visibilityOfElementLocated(productsNormalPriceFromDetailsPage));
+        } catch (NoSuchElementException e) {
+            randomPriceElem = driver.findElement(productsNormalPriceFromDetailsPage);
         }
         String randomsPriceElemText = randomPriceElem.getText();
-        WebElement favouriteButton = wait.until(ExpectedConditions.elementToBeClickable(favouriteButtonFromDetailsPage));
+        WebElement favouriteButton = driver.findElement(favouriteButtonFromDetailsPage);
         favouriteButton.click();
 
         WebElement myAccountIconElem = wait.until(ExpectedConditions.elementToBeClickable(myAccountIconElemLoc));
         myAccountIconElem.click();
         WebElement listOfFavouritesElem = wait.until(ExpectedConditions.elementToBeClickable(listOfFavsElemLoc));
         listOfFavouritesElem.click();
-        wait.until(ExpectedConditions.numberOfElementsToBe(FavouritesListPageLoc, 1));
-        List<WebElement> favourites = driver.findElements(FavouritesListPageLoc);
+        List<WebElement> favourites = wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(FavouritesListPageLoc, 0));
+
         WebElement lastFavourite = favourites.get(0);
         lastFavourite.click();
 
@@ -160,10 +163,10 @@ public class GreetzTestWithWaits {
 
         WebElement selectedFavPriceElem;
         try {
-            selectedFavPriceElem = wait.until(ExpectedConditions.visibilityOfElementLocated(productsCurrentPriceFromDetailsPage));
+            selectedFavPriceElem = driver.findElement(productsCurrentPriceFromDetailsPage);
 
-        } catch (ElementNotVisibleException e) {
-            selectedFavPriceElem = wait.until(ExpectedConditions.visibilityOfElementLocated(productsNormalPriceFromDetailsPage));
+        } catch (NoSuchElementException e) {
+            selectedFavPriceElem = driver.findElement(productsNormalPriceFromDetailsPage);
         }
         String selectedFavouritesPriceText = selectedFavPriceElem.getText().substring(1).replace(",", ".");
         Double doublePriceFavTest2 = Double.parseDouble(selectedFavouritesPriceText);
@@ -174,20 +177,19 @@ public class GreetzTestWithWaits {
 
     @AfterMethod
     public void UndoFavourite() {
-        WebDriverWait wait = new WebDriverWait(driver, 15);
-        WebElement unFavourite = wait.until(ExpectedConditions.elementToBeClickable(favouriteButtonFromDetailsPage));
+
+        WebElement unFavourite = driver.findElement(favouriteButtonFromDetailsPage);
         unFavourite.click();
     }
 
 
     @AfterClass
-    public void Logout() throws InterruptedException {
+    public void Logout() {
         WebDriverWait wait = new WebDriverWait(driver, 15);
-        WebElement myAccountIcon = wait.until(ExpectedConditions.elementToBeClickable(myAccountIconElemLoc));
+        WebElement myAccountIcon = driver.findElement(myAccountIconElemLoc);
         myAccountIcon.click();
         WebElement logoutIcon = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@data-qa-ref='humburger-menu']//span[text()='Uitloggen']")));
         logoutIcon.click();
-        Thread.sleep(1000);
         driver.quit();
 
     }
