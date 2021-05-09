@@ -1,4 +1,4 @@
-package testProjects.Greetz;
+package Greetz;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,7 +13,7 @@ import java.util.List;
 
 import java.util.Random;
 
-public class GreetzTestWithWaits {
+public class GreetzWithWaitsTest {
     private WebDriver driver;
     By allProductsElemsLoc = By.xpath("//div[@class='clearfix' and  @infinite-scroll='main.loadNextPage()']//div[@class='b-products-grid__item' and @ng-class]");
     By favouriteButtonElemLoc = By.cssSelector(".b-favourite");

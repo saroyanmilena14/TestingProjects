@@ -2,9 +2,11 @@
 
 <suite name="mySuite">
     <test name="Run all tests from SixPm">
+
         <packages>
             <package name="SixPm"/>
         </packages>
+
     </test>
 
     <test name="Run all tests from Greetz">

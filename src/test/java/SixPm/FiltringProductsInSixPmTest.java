@@ -1,4 +1,4 @@
-package testProjects.SIixPm;
+package SixPm;
 
 
 import org.openqa.selenium.By;
@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-public class FiltringProductsInSixPm {
+public class FiltringProductsInSixPmTest {
     @Test
     public void testPricesFiltring() throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "src\\resources\\chromedriver.exe");

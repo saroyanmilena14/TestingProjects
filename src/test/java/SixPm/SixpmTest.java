@@ -1,4 +1,4 @@
-package testProjects.SIixPm;
+package SixPm;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
