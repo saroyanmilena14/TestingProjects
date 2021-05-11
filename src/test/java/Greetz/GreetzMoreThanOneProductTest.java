@@ -2,7 +2,7 @@ package Greetz;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -15,7 +15,7 @@ import java.util.Random;
 public class GreetzMoreThanOneProductTest {
 
     @Test
-    public void CheckingPriceChanges() throws InterruptedException {
+    public void CheckingPriceChangesTest() {
         System.setProperty("webdriver.chrome.driver", "src\\resources\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -40,10 +40,8 @@ public class GreetzMoreThanOneProductTest {
         WebElement priceAfter = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), '" + expectedPriceText + "')]")));
         String priceAfterText = priceAfter.getText().substring(1).replace(",", ".");
         Double priceAfterValue = Double.parseDouble(priceAfterText);
-        System.out.println(priceAfterText);
-
-        System.out.println(expectedPrice);
-        Assert.assertEquals(expectedPrice, priceAfterValue, "The expected price "+ expectedPrice+ " doesn't equal to "+priceAfterValue );
+        driver.quit();
+        Assert.assertEquals(expectedPrice, priceAfterValue, "The expected price " + expectedPrice + " doesn't equal to " + priceAfterValue);
 
 
     }

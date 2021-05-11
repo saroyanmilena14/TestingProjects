@@ -1,19 +1,18 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
 <suite name="mySuite">
-    <test name="Run all tests from SixPm">
 
-        <packages>
-            <package name="SixPm"/>
-        </packages>
 
-    </test>
+    <test name="Run one test from Greetz">
 
-    <test name="Run all tests from Greetz">
-        <packages>
-            <package name="Greetz"/>
-        </packages>
-    </test>
+        <classes>
+            <class name="Greetz.GreetzMoreThanOneProductTest">
+            <methods>
+                <include name="CheckingPriceChangesTest" />
+            </methods>
+        </class>
+        </classes>
+        </test>
 
 
 
